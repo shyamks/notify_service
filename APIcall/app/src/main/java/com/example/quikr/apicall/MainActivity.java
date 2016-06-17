@@ -1,4 +1,5 @@
 package com.example.quikr.apicall;
+
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +19,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -78,19 +80,17 @@ public class MainActivity extends AppCompatActivity {
                     }
                     bufferedReader.close();
                     return stringBuilder.toString();
-                }
-                finally{
+                } finally {
                     urlConnection.disconnect();
                 }
-            }
-            catch(Exception e) {
+            } catch (Exception e) {
                 Log.e("ERROR", e.getMessage(), e);
                 return null;
             }
         }
 
         protected void onPostExecute(String response) {
-            if(response == null) {
+            if (response == null) {
                 response = "THERE WAS AN ERROR";
             }
             progressBar.setVisibility(View.GONE);
@@ -100,14 +100,45 @@ public class MainActivity extends AppCompatActivity {
             // TODO: do something with the feed
 
             try {
+                String getadurl = "http://192.168.124.53:7000/adById?id=";
                 JSONObject object = (JSONObject) new JSONTokener(response).nextValue();
-                JSONArray requestID = object.getJSONArray("data");
-                responseView.setText(requestID.toString());
-//                int likelihood = object.getInt("likelihood");
-//                JSONArray photos = object.getJSONArray("photos");
+                JSONArray requestIDs = object.getJSONArray("data");
+                List<String> aggregate = new ArrayList<String>();
+                for (int i = 0; i < requestIDs.length(); i++) {
+                    if (requestIDs.getJSONObject(i).getString("entityName") == "PROJECT") {
+                        try {
+                            URL url = new URL(getadurl + requestIDs.getJSONObject(i).getJSONObject("entityId"));
+                            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                            urlConnection.setRequestProperty("X-Quikr-App-Id", "752");
+                            urlConnection.setRequestProperty("X-Quikr-Client", "realestate");
+                            urlConnection.setRequestProperty("X-Quikr-Token-Id", "72364402");
+                            urlConnection.setRequestProperty("X-Quikr-Signature-v2", "573b66d3cafed4b0682152f3802b166e070f4398");
+                            urlConnection.setRequestProperty("Content-Type", "application/json");
+
+                            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+                            StringBuilder stringBuilder = new StringBuilder();
+                            String line;
+                            while ((line = bufferedReader.readLine()) != null) {
+                                stringBuilder.append(line).append("\n");
+                            }
+                            bufferedReader.close();
+                            String f_response = stringBuilder.toString();
+                            aggregate.add(i, f_response);
+                            urlConnection.disconnect();
+                        } catch (Exception e) {
+                            Log.e("ERROR", e.getMessage(), e);
+                        }
+                    }
+                }
+//                JSONObject f_res = (JSONObject) new JSONTokener(aggregate).nextValue();
+                responseView.setText(aggregate.get(0));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+//                int likelihood = object.getInt("likelihood");
+//                JSONArray photos = object.getJSONArray("photos");
+
+
         }
     }
 }
