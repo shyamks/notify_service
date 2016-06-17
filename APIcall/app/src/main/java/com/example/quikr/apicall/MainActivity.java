@@ -18,6 +18,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     TextView responseView;
     ProgressBar progressBar;
     //static final String API_KEY = "USE_YOUR_OWN_API_KEY";
-    static final String API_URL = "https://api.quikr.com/services/v1/twoWayCall/phoneNumbers";
+    static final String API_URL = "http://192.168.124.53:9000/realestate/v1/getShortlistEntities?userId=5";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
                 URL url = new URL(API_URL);
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestProperty("X-Quikr-App-Id", "752");
+                urlConnection.setRequestProperty("X-Quikr-Client", "realestate");
                 urlConnection.setRequestProperty("X-Quikr-Token-Id", "72364402");
                 urlConnection.setRequestProperty("X-Quikr-Signature-v2", "573b66d3cafed4b0682152f3802b166e070f4398");
                 urlConnection.setRequestProperty("Content-Type", "application/json");
@@ -93,22 +95,19 @@ public class MainActivity extends AppCompatActivity {
             }
             progressBar.setVisibility(View.GONE);
             Log.i("INFO", response);
-            responseView.setText(response);
+            //responseView.setText(response);
             // TODO: check this.exception
             // TODO: do something with the feed
 
-//            try {
-//                JSONObject object = (JSONObject) new JSONTokener(response).nextValue();
-//                String requestID = object.getString("requestId");
+            try {
+                JSONObject object = (JSONObject) new JSONTokener(response).nextValue();
+                JSONArray requestID = object.getJSONArray("data");
+                responseView.setText(requestID.toString());
 //                int likelihood = object.getInt("likelihood");
 //                JSONArray photos = object.getJSONArray("photos");
-//                .
-//                .
-//                .
-//                .
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
