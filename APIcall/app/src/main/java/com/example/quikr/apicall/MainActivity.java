@@ -106,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
                 List<String> aggregate = new ArrayList<String>();
                 for (int i = 0; i < requestIDs.length(); i++) {
                     if (requestIDs.getJSONObject(i).getString("entityName") == "PROJECT") {
+                        system
                         try {
                             URL url = new URL(getadurl + requestIDs.getJSONObject(i).getJSONObject("entityId"));
                             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
