@@ -1,0 +1,65 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/quikr/Desktop/hackathon/notify_service/not1/app/src/main/AndroidManifest.xml:2:1-27:12
+	package
+		ADDED from /Users/quikr/Desktop/hackathon/notify_service/not1/app/src/main/AndroidManifest.xml:3:11-57
+		INJECTED from /Users/quikr/Desktop/hackathon/notify_service/not1/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/quikr/Desktop/hackathon/notify_service/not1/app/src/main/AndroidManifest.xml
+	android:versionName
+		ADDED from /Users/quikr/Desktop/hackathon/notify_service/not1/app/src/main/AndroidManifest.xml:5:11-36
+		INJECTED from /Users/quikr/Desktop/hackathon/notify_service/not1/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/quikr/Desktop/hackathon/notify_service/not1/app/src/main/AndroidManifest.xml
+	android:versionCode
+		ADDED from /Users/quikr/Desktop/hackathon/notify_service/not1/app/src/main/AndroidManifest.xml:4:11-34
+		INJECTED from /Users/quikr/Desktop/hackathon/notify_service/not1/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/quikr/Desktop/hackathon/notify_service/not1/app/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Users/quikr/Desktop/hackathon/notify_service/not1/app/src/main/AndroidManifest.xml:2:11-69
+uses-sdk
+ADDED from /Users/quikr/Desktop/hackathon/notify_service/not1/app/src/main/AndroidManifest.xml:6:5-73
+MERGED from [com.android.support:support-v4:23.4.0] /Users/quikr/Desktop/hackathon/notify_service/not1/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:20:5-43
+	android:targetSdkVersion
+		ADDED from /Users/quikr/Desktop/hackathon/notify_service/not1/app/src/main/AndroidManifest.xml:6:42-71
+		INJECTED from /Users/quikr/Desktop/hackathon/notify_service/not1/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/quikr/Desktop/hackathon/notify_service/not1/app/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		ADDED from /Users/quikr/Desktop/hackathon/notify_service/not1/app/src/main/AndroidManifest.xml:6:15-41
+		INJECTED from /Users/quikr/Desktop/hackathon/notify_service/not1/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/quikr/Desktop/hackathon/notify_service/not1/app/src/main/AndroidManifest.xml
+uses-permission#android.permission.INTERNET
+ADDED from /Users/quikr/Desktop/hackathon/notify_service/not1/app/src/main/AndroidManifest.xml:8:5-67
+	android:name
+		ADDED from /Users/quikr/Desktop/hackathon/notify_service/not1/app/src/main/AndroidManifest.xml:8:22-64
+uses-permission#android.permission.VIBRATE
+ADDED from /Users/quikr/Desktop/hackathon/notify_service/not1/app/src/main/AndroidManifest.xml:9:5-66
+	android:name
+		ADDED from /Users/quikr/Desktop/hackathon/notify_service/not1/app/src/main/AndroidManifest.xml:9:22-63
+application
+ADDED from /Users/quikr/Desktop/hackathon/notify_service/not1/app/src/main/AndroidManifest.xml:11:5-26:19
+MERGED from [com.android.support:support-v4:23.4.0] /Users/quikr/Desktop/hackathon/notify_service/not1/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:22:5-20
+	android:label
+		ADDED from /Users/quikr/Desktop/hackathon/notify_service/not1/app/src/main/AndroidManifest.xml:11:18-50
+	android:icon
+		ADDED from /Users/quikr/Desktop/hackathon/notify_service/not1/app/src/main/AndroidManifest.xml:12:18-54
+activity#com.codeversed.example.Notifications.MainActivity
+ADDED from /Users/quikr/Desktop/hackathon/notify_service/not1/app/src/main/AndroidManifest.xml:14:9-20:20
+	android:label
+		ADDED from /Users/quikr/Desktop/hackathon/notify_service/not1/app/src/main/AndroidManifest.xml:15:19-51
+	android:name
+		ADDED from /Users/quikr/Desktop/hackathon/notify_service/not1/app/src/main/AndroidManifest.xml:14:19-46
+intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
+ADDED from /Users/quikr/Desktop/hackathon/notify_service/not1/app/src/main/AndroidManifest.xml:16:13-19:29
+action#android.intent.action.MAIN
+ADDED from /Users/quikr/Desktop/hackathon/notify_service/not1/app/src/main/AndroidManifest.xml:17:17-68
+	android:name
+		ADDED from /Users/quikr/Desktop/hackathon/notify_service/not1/app/src/main/AndroidManifest.xml:17:25-66
+category#android.intent.category.LAUNCHER
+ADDED from /Users/quikr/Desktop/hackathon/notify_service/not1/app/src/main/AndroidManifest.xml:18:17-76
+	android:name
+		ADDED from /Users/quikr/Desktop/hackathon/notify_service/not1/app/src/main/AndroidManifest.xml:18:27-74
+activity#com.codeversed.example.Notifications.ResultActivity
+ADDED from /Users/quikr/Desktop/hackathon/notify_service/not1/app/src/main/AndroidManifest.xml:22:9-24:20
+	android:label
+		ADDED from /Users/quikr/Desktop/hackathon/notify_service/not1/app/src/main/AndroidManifest.xml:23:19-51
+	android:name
+		ADDED from /Users/quikr/Desktop/hackathon/notify_service/not1/app/src/main/AndroidManifest.xml:22:19-48

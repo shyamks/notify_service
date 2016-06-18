@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/Users/quikr/Desktop/hackathon/notify_service/not1/app/build/intermediates/res/merged/debug/drawable-hdpi-v4/codeversed_logo.png",
+        "source": "/Users/quikr/Desktop/hackathon/notify_service/not1/app/src/main/res/drawable-hdpi/codeversed_logo.png"
+    },
+    {
+        "merged": "/Users/quikr/Desktop/hackathon/notify_service/not1/app/build/intermediates/res/merged/debug/drawable-hdpi-v4/ic_launcher.png",
+        "source": "/Users/quikr/Desktop/hackathon/notify_service/not1/app/src/main/res/drawable-hdpi/ic_launcher.png"
+    }
+]

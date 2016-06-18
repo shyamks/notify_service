@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/Users/quikr/Desktop/hackathon/notify_service/not1/app/build/intermediates/res/merged/debug/layout/notification_custom_remote.xml",
+        "source": "/Users/quikr/Desktop/hackathon/notify_service/not1/app/src/main/res/layout/notification_custom_remote.xml"
+    },
+    {
+        "merged": "/Users/quikr/Desktop/hackathon/notify_service/not1/app/build/intermediates/res/merged/debug/layout/main.xml",
+        "source": "/Users/quikr/Desktop/hackathon/notify_service/not1/app/src/main/res/layout/main.xml"
+    }
+]

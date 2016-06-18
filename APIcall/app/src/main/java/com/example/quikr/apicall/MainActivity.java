@@ -100,15 +100,18 @@ public class MainActivity extends AppCompatActivity {
             // TODO: do something with the feed
 
             try {
-                String getadurl = "http://192.168.124.53:7000/adById?id=";
+                String getadurl = "http://192.168.124.53:7000/adById?id=408348910";
                 JSONObject object = (JSONObject) new JSONTokener(response).nextValue();
                 JSONArray requestIDs = object.getJSONArray("data");
                 List<String> aggregate = new ArrayList<String>();
                 for (int i = 0; i < requestIDs.length(); i++) {
-                    if (requestIDs.getJSONObject(i).getString("entityName") == "PROJECT") {
-                        system
+                    //System.out.println(requestIDs.getJSONObject(i).getString("entityName") );
+                    String ne="PROJECT";
+                    String n=requestIDs.getJSONObject(i).getString("entityName");
+                    if (ne.equals(n)) {
+                        System.out.println("fsd");
                         try {
-                            URL url = new URL(getadurl + requestIDs.getJSONObject(i).getJSONObject("entityId"));
+                            URL url = new URL(getadurl);
                             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                             urlConnection.setRequestProperty("X-Quikr-App-Id", "752");
                             urlConnection.setRequestProperty("X-Quikr-Client", "realestate");
@@ -124,10 +127,11 @@ public class MainActivity extends AppCompatActivity {
                             }
                             bufferedReader.close();
                             String f_response = stringBuilder.toString();
+                            System.out.println("FSDaf");
                             aggregate.add(i, f_response);
                             urlConnection.disconnect();
                         } catch (Exception e) {
-                            Log.e("ERROR", e.getMessage(), e);
+                            Log.e("fsdERROR", e.getMessage(), e);
                         }
                     }
                 }

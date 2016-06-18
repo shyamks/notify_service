@@ -1,0 +1,140 @@
+[
+    {
+        "outputFile": "/Users/quikr/Desktop/hackathon/notify_service/not1/app/build/intermediates/res/merged/debug/values/values.xml",
+        "map": [
+            {
+                "to": {
+                    "startLine": 2,
+                    "startColumn": 4,
+                    "startOffset": 55,
+                    "endColumn": 50,
+                    "endOffset": 101
+                },
+                "from": {
+                    "file": "/Users/quikr/Desktop/hackathon/notify_service/not1/app/src/main/res/values/strings.xml",
+                    "position": {
+                        "startLine": 2,
+                        "startColumn": 4,
+                        "startOffset": 55,
+                        "endColumn": 50,
+                        "endOffset": 101
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 3,
+                    "startColumn": 4,
+                    "startOffset": 106,
+                    "endColumn": 63,
+                    "endOffset": 165
+                },
+                "from": {
+                    "file": "/Users/quikr/Desktop/hackathon/notify_service/not1/app/src/main/res/values/strings.xml",
+                    "position": {
+                        "startLine": 6,
+                        "startColumn": 4,
+                        "startOffset": 266,
+                        "endColumn": 63,
+                        "endOffset": 325
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 4,
+                    "startColumn": 4,
+                    "startOffset": 170,
+                    "endColumn": 57,
+                    "endOffset": 223
+                },
+                "from": {
+                    "file": "/Users/quikr/Desktop/hackathon/notify_service/not1/app/src/main/res/values/strings.xml",
+                    "position": {
+                        "startLine": 5,
+                        "startColumn": 4,
+                        "startOffset": 208,
+                        "endColumn": 57,
+                        "endOffset": 261
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 5,
+                    "startColumn": 4,
+                    "startOffset": 228,
+                    "endColumn": 59,
+                    "endOffset": 283
+                },
+                "from": {
+                    "file": "/Users/quikr/Desktop/hackathon/notify_service/not1/app/src/main/res/values/strings.xml",
+                    "position": {
+                        "startLine": 3,
+                        "startColumn": 4,
+                        "startOffset": 106,
+                        "endColumn": 59,
+                        "endOffset": 161
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 6,
+                    "startColumn": 4,
+                    "startOffset": 288,
+                    "endColumn": 51,
+                    "endOffset": 335
+                },
+                "from": {
+                    "file": "/Users/quikr/Desktop/hackathon/notify_service/not1/app/src/main/res/values/strings.xml",
+                    "position": {
+                        "startLine": 8,
+                        "startColumn": 4,
+                        "startOffset": 382,
+                        "endColumn": 51,
+                        "endOffset": 429
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 7,
+                    "startColumn": 4,
+                    "startOffset": 340,
+                    "endColumn": 51,
+                    "endOffset": 387
+                },
+                "from": {
+                    "file": "/Users/quikr/Desktop/hackathon/notify_service/not1/app/src/main/res/values/strings.xml",
+                    "position": {
+                        "startLine": 7,
+                        "startColumn": 4,
+                        "startOffset": 330,
+                        "endColumn": 51,
+                        "endOffset": 377
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 8,
+                    "startColumn": 4,
+                    "startOffset": 392,
+                    "endColumn": 41,
+                    "endOffset": 429
+                },
+                "from": {
+                    "file": "/Users/quikr/Desktop/hackathon/notify_service/not1/app/src/main/res/values/strings.xml",
+                    "position": {
+                        "startLine": 4,
+                        "startColumn": 4,
+                        "startOffset": 166,
+                        "endColumn": 41,
+                        "endOffset": 203
+                    }
+                }
+            }
+        ]
+    }
+]
