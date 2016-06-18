@@ -62,31 +62,7 @@ public class MainActivity extends AppCompatActivity {
             //String email = emailText.getText().toString();
             // Do some validation here
 
-            try {
-                URL url = new URL(API_URL);
-                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.setRequestProperty("X-Quikr-App-Id", "752");
-                urlConnection.setRequestProperty("X-Quikr-Client", "realestate");
-                urlConnection.setRequestProperty("X-Quikr-Token-Id", "72364402");
-                urlConnection.setRequestProperty("X-Quikr-Signature-v2", "573b66d3cafed4b0682152f3802b166e070f4398");
-                urlConnection.setRequestProperty("Content-Type", "application/json");
 
-                try {
-                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-                    StringBuilder stringBuilder = new StringBuilder();
-                    String line;
-                    while ((line = bufferedReader.readLine()) != null) {
-                        stringBuilder.append(line).append("\n");
-                    }
-                    bufferedReader.close();
-                    return stringBuilder.toString();
-                } finally {
-                    urlConnection.disconnect();
-                }
-            } catch (Exception e) {
-                Log.e("ERROR", e.getMessage(), e);
-                return null;
-            }
         }
 
         protected void onPostExecute(String response) {
