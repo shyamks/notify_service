@@ -1,0 +1,2 @@
+CHANGED,/Users/quikr/Desktop/delete/notify_service/Example02/app/build/intermediates/transforms/instantRun/debug/folders/4000/5/enhanced/com/sitepoint/example02/MainActivity$override.class
+CHANGED,/Users/quikr/Desktop/delete/notify_service/Example02/app/build/intermediates/transforms/instantRun/debug/folders/4000/5/enhanced/com/android/tools/fd/runtime/AppPatchesLoaderImpl.class
