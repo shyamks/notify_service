@@ -7,11 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.NotificationCompat;
-import android.view.View;
-import android.widget.RemoteViews;
 
 //import com.codeversed.example.Notifications.MainActivity;
 //import pushnotification.R;
@@ -21,8 +17,6 @@ import com.sitepoint.example02.R;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.Timer;
-import java.util.TimerTask;
 
 //import notification.CreateNotification;
 //import java.util.Locale;
@@ -34,19 +28,23 @@ public class Demm {
     private final static int BIG_TEXT_STYLE = 0x01;
     private final static int NORMAL = 0x00;
     NotificationManager mNotificationManager;
-    double slat,slon, dlat, dlon;
+    private double slat, slon, dlat, dlon;
+    private CharSequence title, MAIN_TEXT, SMALL_TEXT = "House Shorlisted Nearby";
 
     public Demm(MainActivity c) {
-        this.n=c;
-        mNotificationManager= (NotificationManager)n.getSystemService(Context.NOTIFICATION_SERVICE);;
+        this.n = c;
+        mNotificationManager = (NotificationManager) n.getSystemService(Context.NOTIFICATION_SERVICE);
+        ;
 
     }
 
-    public void runn(double slat, double slon, double dlat, double dlon){
-        this.slat=slat;
-        this.slon=slon;
-        this.dlat=dlat;
-        this.dlon=dlon;
+    public void runn(double slat, double slon, double dlat, double dlon, CharSequence title, CharSequence maintext) {
+        this.slat = slat;
+        this.slon = slon;
+        this.dlat = dlat;
+        this.dlon = dlon;
+        this.MAIN_TEXT = maintext;
+        this.title = title;
         new CreateNotification().execute();
     }
 
@@ -83,8 +81,8 @@ public class Demm {
 
         // Create the style object with BigTextStyle subclass.
         NotificationCompat.BigTextStyle notiStyle = new NotificationCompat.BigTextStyle();
-        notiStyle.setBigContentTitle("Big Text Expanded");
-        notiStyle.setSummaryText("Nice big text.");
+        notiStyle.setBigContentTitle(MAIN_TEXT);
+        notiStyle.setSummaryText(SMALL_TEXT);
 
         try {
             remote_picture = BitmapFactory.decodeStream((InputStream) new URL(sample_url).getContent());
@@ -93,8 +91,7 @@ public class Demm {
         }
 
         // Add the big text to the style.
-        CharSequence bigText = "This is an example of a large string to demo how much " +
-                "text you can show in a 'Big Text Style' notification.";
+        CharSequence bigText = title;
         notiStyle.bigText(bigText);
 
         // Creates an explicit intent for an ResultActivity to receive.
@@ -109,7 +106,7 @@ public class Demm {
         // Adds the Intent that starts the Activity to the top of the stack.
 
         Intent rintent = new Intent(android.content.Intent.ACTION_VIEW,
-                Uri.parse("http://maps.google.com/maps?saddr="+slat+","+slon+"&daddr="+dlat+","+dlon));
+                Uri.parse("http://maps.google.com/maps?saddr=" + slat + "," + slon + "&daddr=" + dlat + "," + dlon));
         stackBuilder.addNextIntent(rintent);
         PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 

@@ -2,6 +2,7 @@ package com.example.quikr.apicall;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -28,8 +29,9 @@ public class MainActivity extends AppCompatActivity {
     EditText emailText;
     TextView responseView;
     ProgressBar progressBar;
+    List<String> aggregate;
     //static final String API_KEY = "USE_YOUR_OWN_API_KEY";
-    static final String API_URL = "http://192.168.124.53:9000/realestate/v1/getShortlistEntities?userId=5";
+    static final String API_URL = "https://api.quikr.com/platform/v2/getAdByIds?id=269347584";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    class RetrieveFeedTask extends AsyncTask<Void, Void, String> {
+    class RetrieveFeedTask extends AsyncTask<Void, Void, List<String>> {
 
         private Exception exception;
 
@@ -58,64 +60,47 @@ public class MainActivity extends AppCompatActivity {
             responseView.setText("");
         }
 
-        protected String doInBackground(Void... urls) {
+        protected List<String> doInBackground(Void... urls) {
             //String email = emailText.getText().toString();
             // Do some validation here
+            try {
+                aggregate = new ArrayList<>();
+                URL url = new URL(API_URL);
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestProperty("X-Quikr-App-Id", "752");
+                urlConnection.setRequestProperty("X-Quikr-Client", "realestate");
+                urlConnection.setRequestProperty("X-Quikr-Token-Id", "73276267");
+                urlConnection.setRequestProperty("X-Quikr-Signature-v2", "e4747e89adb065965eeda0921df2bee6c9023a83");
+                urlConnection.setRequestProperty("Content-Type", "application/json");
 
+                try {
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+                    StringBuilder stringBuilder = new StringBuilder();
+                    String line;
+                    while ((line = bufferedReader.readLine()) != null) {
+                        stringBuilder.append(line).append("\n");
+                    }
+                    bufferedReader.close();
+                    System.out.println(stringBuilder.toString());
+                    aggregate.add(stringBuilder.toString());
+                } finally {
+                    urlConnection.disconnect();
+                }
+                return aggregate;
+            } catch (Exception e) {
+                Log.e("ERROR", e.getMessage(), e);
+                return null;
+            }
 
         }
 
-        protected void onPostExecute(String response) {
-            if (response == null) {
-                response = "THERE WAS AN ERROR";
-            }
-            progressBar.setVisibility(View.GONE);
-            Log.i("INFO", response);
+        @Override
+        protected void onPostExecute(List<String> response) {
             //responseView.setText(response);
             // TODO: check this.exception
             // TODO: do something with the feed
 
-            try {
-                String getadurl = "http://192.168.124.53:7000/adById?id=408348910";
-                JSONObject object = (JSONObject) new JSONTokener(response).nextValue();
-                JSONArray requestIDs = object.getJSONArray("data");
-                List<String> aggregate = new ArrayList<String>();
-                for (int i = 0; i < requestIDs.length(); i++) {
-                    //System.out.println(requestIDs.getJSONObject(i).getString("entityName") );
-                    String ne="PROJECT";
-                    String n=requestIDs.getJSONObject(i).getString("entityName");
-                    if (ne.equals(n)) {
-                        System.out.println("fsd");
-                        try {
-                            URL url = new URL(getadurl);
-                            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-                            urlConnection.setRequestProperty("X-Quikr-App-Id", "752");
-                            urlConnection.setRequestProperty("X-Quikr-Client", "realestate");
-                            urlConnection.setRequestProperty("X-Quikr-Token-Id", "72364402");
-                            urlConnection.setRequestProperty("X-Quikr-Signature-v2", "573b66d3cafed4b0682152f3802b166e070f4398");
-                            urlConnection.setRequestProperty("Content-Type", "application/json");
-
-                            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-                            StringBuilder stringBuilder = new StringBuilder();
-                            String line;
-                            while ((line = bufferedReader.readLine()) != null) {
-                                stringBuilder.append(line).append("\n");
-                            }
-                            bufferedReader.close();
-                            String f_response = stringBuilder.toString();
-                            System.out.println("FSDaf");
-                            aggregate.add(i, f_response);
-                            urlConnection.disconnect();
-                        } catch (Exception e) {
-                            Log.e("fsdERROR", e.getMessage(), e);
-                        }
-                    }
-                }
-//                JSONObject f_res = (JSONObject) new JSONTokener(aggregate).nextValue();
-                responseView.setText(aggregate.get(0));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            System.out.println(response);
 //                int likelihood = object.getInt("likelihood");
 //                JSONArray photos = object.getJSONArray("photos");
 

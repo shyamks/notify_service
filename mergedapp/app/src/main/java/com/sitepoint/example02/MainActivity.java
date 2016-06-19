@@ -1,13 +1,10 @@
 package com.sitepoint.example02;
 
 import android.location.Location;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -16,20 +13,17 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.text.DateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import pushnotification.Demm;
+import pushnotification.locationService;
+
 
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
@@ -39,9 +33,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private String mLastUpdateTime;
     private TextView mLatitudeTextView;
     private TextView mLongitudeTextView;
-    static final String API_URL = "https://api.quikr.com/platform/v2/getAdByIds?id=269347584";
-    static List<String> aggregate;
-
+    List<String> data;
+    private int toggle = 0;
+    private double DISTANCE = 6.4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +50,13 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();
+//        locationService obj = new locationService();
+//        obj.setUpdateListener(locationService.OnUpdateListener {
+//            public void onUpdate(List<String> obj) {
+//            }
+//        });
+//        locationService.execute();
+
     }
 
     @Override
@@ -63,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         super.onStart();
         mGoogleApiClient.connect();
     }
+
     @Override
     protected void onStop() {
         super.onStop();
@@ -71,51 +73,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         }
     }
 
-    class RetrieveFeedTask extends AsyncTask<Void, Void, List<String>> {
-
-        private Exception exception;
-
-        protected void onPreExecute() {
-        }
-
-        protected List<String> doInBackground(Void... urls) {
-            //String email = emailText.getText().toString();
-            // Do some validation here
-            try {
-                aggregate = new ArrayList<>();
-                URL url = new URL(API_URL);
-                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.setRequestProperty("X-Quikr-App-Id", "752");
-                urlConnection.setRequestProperty("X-Quikr-Client", "realestate");
-                urlConnection.setRequestProperty("X-Quikr-Token-Id", "72364402");
-                urlConnection.setRequestProperty("X-Quikr-Signature-v2", "573b66d3cafed4b0682152f3802b166e070f4398");
-                urlConnection.setRequestProperty("Content-Type", "application/json");
-
-                try {
-                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-                    StringBuilder stringBuilder = new StringBuilder();
-                    String line;
-                    while ((line = bufferedReader.readLine()) != null) {
-                        stringBuilder.append(line).append("\n");
-                    }
-                    bufferedReader.close();
-                    aggregate.add(stringBuilder.toString());
-                } finally {
-                    urlConnection.disconnect();
-                }
-                return aggregate;
-            } catch (Exception e) {
-                Log.e("ERROR", e.getMessage(), e);
-                return null;
-            }
-
-
-        }
-
-        protected void onPostExecute(List<String> response) {
-        }
-
-    }
     @Override
     public void onConnected(Bundle bundle) {
         mLocationRequest = LocationRequest.create();
@@ -123,8 +80,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         mLocationRequest.setInterval(5000);
         mLocationRequest.setFastestInterval(3000);
         LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
-        new RetrieveFeedTask().execute();
-
+        try {
+            data = new locationService().execute().get();
+        } catch (ExecutionException | InterruptedException ei) {
+            ei.printStackTrace();
+        }
     }
 
     @Override
@@ -138,29 +98,37 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         mLastUpdateTime = DateFormat.getTimeInstance().format(new Date());
         mLatitudeTextView.setText(String.valueOf(location.getLatitude()));
         mLongitudeTextView.setText(String.valueOf(location.getLongitude()));
-        String value = aggregate.get(0);
-        try {
-            JSONObject object = (JSONObject) new JSONTokener(value).nextValue();
-            String geo_pin = object.getString("geo_pin");
-            String[] lat_long = geo_pin.split(",");
-            //"13.01570034,77.60705566"
-            Float dlat1 = Float.valueOf(lat_long[0]);
-            Float dlong1 = Float.valueOf(lat_long[1]);
-            double slat=location.getLatitude(),slong=location.getLongitude(),dlat=dlat1,dlong=dlong1;
-            double d=distance(slat, slong, dlat,dlong , "K");
-            System.out.println("Haha");
-            System.out.println(d);
+        if (data.size() != 0) {
+            try {
+                JSONObject object = (JSONObject) new JSONTokener(data.get(0)).nextValue();
+                JSONArray GetAdByIdsResponse_data = object.getJSONObject("GetAdByIdsResponse").getJSONArray("data");
+                JSONObject data1 = GetAdByIdsResponse_data.getJSONObject(0);
+                String geo_pin = data1.getString("geo_pin");
+                String title = data1.getString("title");
+                String dealer_name = data1.getString("user_name");
 
-            if(d>=6.1800000000){
-                Demm demo=new Demm(this);
-                demo.runn(slat,slong,dlat,dlong);
+                System.out.println(data.get(0));
+                String[] lat_long = geo_pin.split(",");
+
+                double dlat1 = Double.valueOf(lat_long[0]);
+                double dlong1 = Double.valueOf(lat_long[1]);
+                double slat = location.getLatitude(), slong = location.getLongitude();
+                double d = distance(slat, slong, dlat1, dlong1, "K");
+                System.out.println(d);
+
+                if (d >= DISTANCE && toggle == 0) {
+                    toggle = 1;
+                    Demm demo = new Demm(this);
+                    demo.runn(slat, slong, dlat1, dlong1, title, dealer_name);
+                } else {
+                    if (d < DISTANCE) {
+                        toggle = 0;
+                    }
+                }
+            } catch (Exception e) {
+                Log.e("fsdERROR", e.getMessage(), e);
             }
-        }catch(Exception e){
-            Log.e("fsdERROR", e.getMessage(), e);
         }
-        //"12.9715104,77.6234463"
-
-        //Toast.makeText(this, "Updated: " + mLastUpdateTime, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -184,14 +152,14 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     }
 
     /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-	/*::	This function converts decimal degrees to radians						 :*/
-	/*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+    /*::	This function converts decimal degrees to radians						 :*/
+    /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
     private static double deg2rad(double deg) {
         return (deg * Math.PI / 180.0);
     }
 
     /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-	/*::	This function converts radians to decimal degrees						 :*/
+    /*::	This function converts radians to decimal degrees						 :*/
 	/*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
     private static double rad2deg(double rad) {
         return (rad * 180 / Math.PI);
