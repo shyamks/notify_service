@@ -118,8 +118,8 @@ public class Demm {
 //                .addAction(R.drawable.ic_launcher, "One", resultPendingIntent)
 //                .addAction(R.drawable.ic_launcher, "Two", resultPendingIntent)
 //                .addAction(R.drawable.ic_launcher, "Three", resultPendingIntent)
-                .setContentTitle("Big Text Normal")
-                .setContentText("This is an example of a Big Text Style.")
+                .setContentTitle(MAIN_TEXT)
+                .setContentText(SMALL_TEXT)
                 .setStyle(notiStyle).build();
     }
 
